@@ -1,33 +1,27 @@
 $(document).ready( function() {
  function playNote(note_letter) {
    // Audio tag is formatting like ex: "aAudio"
-   var audio_tag = document.getElementById(note_letter + "Audio");
-   audio_tag.currentTime = 0;
-   audio_tag.play();
+   var audio = $("#" + note_letter + "Audio")[0];
+   audio.currentTime = 0;
+   audio.play();
  }
 
  // Selector for any element with note class
  $(".note").click(function(){
-   // get the associated class
-   var class_name = $(this).attr("class");
-
-   // class name contains the specific note
-   var note = class_name.charAt(class_name.length - 1);
+   // HTML contains the specific note
+   var note = $(this).html();
 
    playNote(note);
  });
 
  // Logic for keys
- $(this).keypress(function(e) {
-    // corresponds to the button press
-    var key_code = e.which;
-
+ $(this).keydown(function(e) {
     // Ensure that it is in the range of a-g
-    if (key_code > 96 && key_code < 104) {
-      var note = String.fromCharCode(e.which);
+    if (e.which >= 65 && e.which <= 71) {
+      var note = e.key;
       playNote(note);
     } else {
-      alert("Stop pressing weird keys!");
+      console.log("Stop pressing weird keys!");
     }
  });
 
